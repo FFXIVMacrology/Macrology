@@ -422,10 +422,7 @@ USAGE `/hotbar remove [hotbar number] [slot number]`
 Remove the specified hotkey. You cannot remove hotkey on undisplayable hotbars. Input "`all`" at `[slot number]` will remove everything on this hotbar.
 
 Example:
-- Delete used macros which shouldn't be run twice. 
-  ```
-  There is no appropriate example here.
-  ```
+- Delete used macros which shouldn't be run twice. There is no appropriate example here.
 - Delete everything displayable (`rm -rf ./*`).
   ```
   /hotbar remove 1 all
@@ -451,10 +448,7 @@ Change the first hotbar to show the contents of specified hotbar while keep its 
 - Unable to change to undisplayable hotbars except `hotbar 1`.
   
 Example:
-- `[Advanced]`hotbar-change Macro Systems.
-  ```
-  It's hard to be shown. For more details, please read part 2.
-  ```
+- `[Advanced]`hotbar-change Macro Systems. It's hard to be shown. For more details, please read part 2.
 
 ### copy
 USAGE `/hotbar copy [class/job name(abbr.) 1] [hotbar number 1] [class/job name(abbr.) 2] [hotbar number 2]`  
