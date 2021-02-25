@@ -67,6 +67,7 @@ TL; DR: If you already know basic macros well, read "Hotbar" in Part 1 than star
 - Conclusion
 
 ### Part 3 Uncommon Macro
+- Introduction
 - Process Guiding Macro
 - Priority Macro
 - Rolling Macro System
@@ -406,7 +407,7 @@ Example:
   /hotbar set "Ruin III" 7 12
   /e SMN TEA Beginner ready!
   ```
-- [Advanced]Overwrite an executed action macro with action hotkey, allowing it to be queued in. For more details, please read part 2.
+- `[Advanced]`Overwrite an executed action macro with action hotkey, allowing it to be queued in. For more details, please read part 2.
   ```
   /micon "Midare Setsugekka"
   /ac "Iaijutsu"
@@ -989,7 +990,121 @@ Seems easy but bear in mind that **every sword of macro has two edges**. Your ro
 Tips: Use secondary keybind and you can still rolling `1234567890-=` instead of `12345qergv~f`.
 
 ## Menu Macro System
-pass
+### Jumping Menu Macro System
+Jumping menu is a good way to sort a lot of function and also save your keybind. 
+
+It's well-known that crafters have a lot of actions and macros, filling your hotbars.We can make a jumping menu macro system to sort these actions. `1` for progress, `2` for quality, `3` for durable, `4` for buffs and `5` for opener, etc. 
+
+Every category needs 1 macro and 1 hotbar. Main manu is also a category, we put several `hotbar copy` on it. There is no difference between classes, so we can apply it to all classes by `current`.
+
+For example, `Weaver 4-10` store all these actions, and by using `/hotbar copy Weaver X current 1` we can access to this menu macro at any classes.
+
+![](img/menu1.jpg)
+
+Hotbar 4 for progress, 5 for quality, 6 for buffs, 7 for durable, 8 for opener, 9 for final blessing, and 10 for main menu. We just put actions on these hotbar and make some macros to `turn to` them. For example:
+```
+/hotbar copy Weaver 10 current 1
+/hotbar copy Weaver 2 current 2
+/hotbar copy Weaver 3 current 3
+```
+This macro is `go back to main menu`. There are some other macros on `hotbar 2-3` so sync them together. Of course, don't forget that you must change to Weaver first if you want to change your hotbar.
+
+This is a final scene:
+
+![](img/menu2.gif)
+
+So convenience, isn't it? Though most crafting using 15 lines of `/ac`, but you must make expert recipes yourself.
+
+If a jumping macro system holds nothing cannot be `sets` and no secondary menus, you can use `sets` like `exhibition macro`. This not only saves a hotbar but also makes things more convenience. You can apply your changes just using macro panel instead of copying back or change to that job. For example:
+```
+/hotbar minion "Weatherproof Gaelicat" 4 1
+/hotbar minion "Allagan Melon" 4 2
+/hotbar minion "Sand Fox" 4 3
+/hotbar minion "Paissa Threadpuller" 4 4
+/hotbar minion "Little Leafman" 4 5
+/hotbar minion "The Major-General" 4 6
+/hotbar minion "Cute Justice" 4 8
+/hotbar minion "Wind-up Dulia-Chai" 4 9
+/hotbar minion "Domakin" 4 10
+/hotbar minion "Giant Beaver" 4 11
+/hotbar minion "Lalinator 5.H0" 4 12
+```
+This menu is on `hotbar 4`. `slot 7` is `return to main manu`.
+
+This is a final scene:
+
+![](img/menu3.gif)
+
+If you get a new minion, no more searching in minion panel is needed, just replace the name in macro panel and you can find it at once.
+
+### Folding Menu Macro System
+Folding menu is a good way to reduce interface space cost. When you do not need a submanu, you can hide it. 
+
+A character can change to all jobs, and a lot of gearset hotkey may fill your scene. A folding menu macro system serve it well.
+
+We need a main manu, a submanu `moniter` and several submenu `base`. We can split all jobs into 5 category: Tank, Healer, DPS, Crafter, Gatherer. `Preinstall` these gearset to `base`, then you can use `/hotbar display` with `/hotbar copy` to show and hide these hotbar like folding. You can also add an auto-hide by `/wait`. Don't forget the interruption problems.
+
+Example:
+```
+/hotbar copy Carpenter 7 share 8
+/hotbar display 8 on
+/wait 5
+/hotbar display 8 off
+/hotbar remove 8 all
+```
+
+Final scene:
+
+![](img/menu4.gif)
+
+This is just the simplest form. you can add some useful function on it like this:
+```
+/hotbar copy CRP 9 share 8
+/hotbar display 5 off
+/hotbar display 8 on
+/title set "of the Golden Needle"
+/hotbar copy Weaver 10 Weaver 1
+/hotbar copy Weaver 10 Blacksmith 1
+/hotbar copy Weaver 10 Armorer 1
+/hotbar copy Weaver 10 Culinarian 1
+/hotbar copy Weaver 10 Leatherworker 1
+/hotbar copy Weaver 10 Alchemist 1
+/hotbar copy Weaver 10 Goldsmith 1
+/hotbar copy Weaver 10 Carpenter 1 <wait.3>
+/hotbar display 8 off
+/hotbar remove 8 all
+```
+You can find 3 additional function:
+- `/hotbar display 5 off`: This hotbar is for combat only.
+- `/title set "of the Golden Needle"`: Change my title to suit crafters.
+- `/hotbar copy Weaver 10 [crafter] 1`: apply my changes.
+
+Here is a example to use macro in folding menu and dealing with interruption:
+```
+/micon SCH classjob
+/hotbar display 8 off
+/hotbar copy SCH 5 share 5
+/hotbar display 5 on
+/gs change "Rune Rest Realm"
+/hotbar remove 8 all
+/title set Unbeliever
+```
+- `/hotbar display 8 off`: hide submenu moniter, for this macro interrutes auto-hide.
+- `/hotbar copy SCH 5 share 5`: call out SCH specific combat hotbar.
+- `/gs change "Rune Rest Realm"`: Gearset name is better than number.
+- `/hotbar remove 8 all`: delete anything on submenu moniter. I have keybinds on that hotbar.
+
+Too much usages. Here are only usages out of combat, but you can use it in combat as well. Jumping menu for opener, folding menu for CD tracing, or any thing you want!
 
 ## Conclusion
-pass
+If you have read carefully and done some practice, I believe you have mastered most generally useful macro system including:
+- Message Macro Type ASWC
+- hotbar-change Macro System
+- Combo Macro System Type ASWC
+- Exhibition Macro
+- Menu Macro System
+
+`/hotbar set` and `/hotbar copy` are the most important commands. If you learn them well, a macro system will cost you no more than 10 minutes.
+
+# Part 3 
+## Introduction
