@@ -35,53 +35,53 @@ This article is translated from Chinese. Examples are changed to better fit Engl
 TL; DR: If you already know basic macros well, read "Hotbar" in Part 1 than start from "Message Macro Type ASWC" in Part 2.  
 
 ## Index
-### Part 1 Basic Macro
-- Introduction
-- Macro Panel
-- Text Command and Macro
-- Characteristics of Macro
-- Placeholder
-- Local Processing
-- Action Queue
-- /ac
-- /wait and <wait.X>
-- Hotbar
-- /hotbar
-- Chatting Command
-- Macro-controlling Text Command
-- Examples
-- Debug
-- Conclusion
+### [Part 1 Basic Macro](#part-1-basic-macro-1)
+- [Introduction](#introduction)
+- [Macro Panel](#Macro-Panel)
+- [Text Command and Macro](#Text-Command-and-Macro)
+- [Characteristics of Macro](#Characteristics-of-Macro)
+- [Placeholder](#Placeholder)
+- [Local Processing](#Local-Processing)
+- [Action Queue](#Action-Queue)
+- [/ac](#/ac)
+- [/wait and <wait.X>](#/wait-and-<wait.X>)
+- [Hotbar](#Hotbar)
+- [/hotbar](#hotbar-1)
+- [Chatting Command](#Chatting-Command)
+- [Macro-controlling Text Command](#Macro-controlling-Text-Command)
+- [Examples](#Examples)
+- [Debug](#Debug)
+- [Conclusion](#Conclusion)
 
-### Part 2 Advanced Macro
-- Introduction
-- FAQ
-- Abbreviation
-- Message Macro Type ASWC
-- Action State-system
-- hotbar-change Macro System
-- hotbar-change Macro System Logic Guide Diagram
-- Combo Macro System Type ASWC
-- Exhibition Macro
-- Menu Macro System
-- Conclusion
+### [Part 2 Advanced Macro](#part-2-advanced-macro-1)
+- [Introduction](#Introduction-1)
+- [FAQ](#FAQ)
+- [Abbreviation](#Abbreviation)
+- [Message Macro Type ASWC](#Message-Macro-Type-ASWC)
+- [Action State-system](#Action-State-system)
+- [hotbar-change Macro System](#hotbar-change-Macro-System)
+- [hotbar-change Macro System Logic Guide Diagram](#hotbar-change-Macro-System-Logic-Guide-Diagram)
+- [Combo Macro System Type ASWC](#Combo-Macro-System-Type-ASWC)
+- [Exhibition Macro](#Exhibition-Macro)
+- [Menu Macro System](#Menu-Macro-System)
+- [Conclusion](#Conclusion-1)
 
-### Part 3 Uncommon Macro
-- Introduction
-- Process Guiding Macro
-- Priority Macro
-- Rolling Macro System
-- Pseudo-random Macro System
-- Multistage Fallback Macro System
-- Multi-purpose Macro and Shared Hotbar
-- Macro at Low Frames
-- Core Framework of Macro
-- Tricks
-- Unsolvable Problem
-- Macrology Acrobatics
-- Macrology Thought
-- Sharing
-- Postscript
+### [Part 3 Uncommon Macro](#part-3-Uncommon-macro-1)
+- [Introduction](#Introduction-2)
+- [Process Guiding Macro](#Process-Guiding-Macro)
+- [Priority Macro](#Priority-Macro)
+- [Rolling Macro System](#Rolling-Macro-System)
+- [Pseudo-random Macro System](#Pseudo-random-Macro-System)
+- [Multistage Fallback Macro System](#Multistage-Fallback-Macro-System)
+- [Multi-purpose Macro and Shared Hotbar](#Multi-purpose-Macro-and-Shared-Hotbar)
+- [Macro at Low Frames](#Macro-at-Low-Frames)
+- [Core Framework of Macro](#Core-Framework-of-Macro)
+- [Tricks](#Tricks)
+- [Unsolvable Problem](#Unsolvable-Problem)
+- [Macrology Acrobatics](#Macrology-Acrobatics)
+- [Macrology Thought](#Macrology-Thought)
+- [Sharing](#Sharing)
+- [Postscript](#Postscript)
 
 # Part 1 Basic Macro
 ## Introduction
@@ -1106,5 +1106,5 @@ If you have read carefully and done some practice, I believe you have mastered m
 
 `/hotbar set` and `/hotbar copy` are the most important commands. If you learn them well, a macro system will cost you no more than 10 minutes.
 
-# Part 3 
+# Part 3 Uncommon Macro
 ## Introduction
