@@ -1,0 +1,39 @@
+name: toc
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  toc:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+
+      - run: yarn install
+
+      - name: Generate TOC
+        run: yarn toc
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: 'docs: update TOC'
+          title: 'docs: update TOC'
+          body: This PR updates the table of contents.
+          branch: toc-update
+          base: main
+          labels: toc
+          reviewers: >
+            MaikoTan
+            Echoring
+          draft: false
+          branch-suffix: short-commit-hash
