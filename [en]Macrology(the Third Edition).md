@@ -42,39 +42,39 @@ TL; DR: If you already know basic macros well, read "Hotbar" in Part 1 than star
 ### [Part 1 Basic Macro](#part-1-basic-macro-1)
 
 - [Introduction](#introduction)
-- [Macro Panel](#Macro-Panel)
-- [Text Command and Macro](#Text-Command-and-Macro)
-- [Characteristics of Macro](#Characteristics-of-Macro)
-- [Placeholder](#Placeholder)
-- [Local Processing](#Local-Processing)
-- [Action Queue](#Action-Queue)
+- [Macro Panel](#macro-panel)
+- [Text Command and Macro](#text-command-and-macro)
+- [Characteristics of Macro](#characteristics-of-macro)
+- [Placeholder](#placeholder)
+- [Local Processing](#local-processing)
+- [Action Queue](#action-queue)
 - [/ac](#/ac)
 - [/wait and <wait.X>](#/wait-and-<wait.X>)
-- [Hotbar](#Hotbar)
+- [Hotbar](#hotbar)
 - [/hotbar](#hotbar-1)
-- [Chatting Command](#Chatting-Command)
-- [Macro-controlling Text Command](#Macro-controlling-Text-Command)
-- [Examples](#Examples)
-- [Debug](#Debug)
-- [Conclusion](#Conclusion)
+- [Chatting Command](#chatting-command)
+- [Macro-controlling Text Command](#macro-controlling-text-command)
+- [Examples](#examples)
+- [Debug](#debug)
+- [Conclusion](#conclusion)
 
 ### [Part 2 Advanced Macro](#part-2-advanced-macro-1)
 
-- [Introduction](#Introduction-1)
-- [FAQ](#FAQ)
-- [Abbreviation](#Abbreviation)
-- [Message Macro Type ASWC](#Message-Macro-Type-ASWC)
-- [Action State-system](#Action-State-system)
-- [hotbar-change Macro System](#hotbar-change-Macro-System)
-- [hotbar-change Macro System Logic Guide Diagram](#hotbar-change-Macro-System-Logic-Guide-Diagram)
-- [Combo Macro System Type ASWC](#Combo-Macro-System-Type-ASWC)
-- [Exhibition Macro](#Exhibition-Macro)
-- [Menu Macro System](#Menu-Macro-System)
-- [Conclusion](#Conclusion-1)
+- [Introduction](#introduction-1)
+- [FAQ](#faq)
+- [Abbreviation](#abbreviation)
+- [Message Macro Type ASWC](#message-macro-type-aswc)
+- [Action State-system](#action-state-system)
+- [hotbar-change Macro System](#hotbar-change-macro-system)
+- [hotbar-change Macro System Logic Guide Diagram](#hotbar-change-macro-system-logic-guide-diagram)
+- [Combo Macro System Type ASWC](#combo-macro-system-type-aswc)
+- [Exhibition Macro](#exhibition-macro)
+- [Menu Macro System](#menu-macro-system)
+- [Conclusion](#conclusion-1)
 
-### [Part 3 Uncommon Macro](#part-3-Uncommon-macro-1)
+### [Part 3 Uncommon Macro](#part-3-uncommon-macro-1)
 
-- [Introduction](#Introduction-2)
+- [Introduction](#introduction-2)
 - [Process Guiding Macro](#Process-Guiding-Macro)
 - [Priority Macro](#Priority-Macro)
 - [Rolling Macro System](#Rolling-Macro-System)
@@ -119,7 +119,7 @@ Press Esc or select system in main menu, then select User Macros to open macro p
 7. Macro list. Every slot can save a macro. You can drag it to hotbar, but can't drag to other slots. You can right-click to call out the submenu.
 8. the number of macro you are targeting.
 9. Used slots this page.
-10. Text command list. Since it is hard to find the command you want without searching, you'd better use /? or go to https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/
+10. Text command list. Since it is hard to find the command you want without searching, you'd better use /? or go to <https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/>
 
 There are several submenu options:
 
@@ -149,7 +149,7 @@ There are two basic characteristics of macro: one direction, one lane.
 
 Placeholder is an element of text. Different from others, placeholder can change itself logically to meet current state. Placeholder looks like `<...>`, present a logical object. It's the only element that can change itself. When line sent, placeholder will be replaced by its logical object. For example, "`Provoke => <t>`", if target names "Fatebreaker", it will change to "`Provoke => Fatebreaker`". Players in other languages will see the name in their own languages. If logical object does not exist, placeholder will change to `None` (not blank or space).
 
-Placeholder can be used in text command. Except using in chatting commands, it can also become a parameter of other commands. Like `<tt>`, target's target, we call them logical targets. Due to World Traveling system launched in patch 4.5, we can no longer use ID instead of placeholder except `/tell`. Placeholder list is not available in game, for details, please read https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/placeholder/
+Placeholder can be used in text command. Except using in chatting commands, it can also become a parameter of other commands. Like `<tt>`, target's target, we call them logical targets. Due to World Traveling system launched in patch 4.5, we can no longer use ID instead of placeholder except `/tell`. Placeholder list is not available in game, for details, please read <https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/placeholder/>
 
 There are two placeholders not as the same as others. `<wait.X>` is a controlling command, equals to `/wait` (see below). It and anything after it will not appear in messages. `<se.X>` will ring a sound in party/alliance/echo. it won't change to other forms.
 
@@ -203,19 +203,26 @@ There are some other examples of single /ac:
   ```
 
 - Cast actions by priority. You'd better only use this on ability. You may not feel well, but do not affect your combat except using at very last this phase. Due to 1 frame per line, there is little chance that the latter one will be cast first.
+
   ```
   /ac "Fan Dance III"
   /ac "Fan Dance"
   ```
+
 - Cast actions which target ground. This helps you cast them quicker, but not able to precisely targeting.
+
   ```
   /ac "Sacred Soil" <t>
   ```
+
 - Cast actions without targeting. This can save your operation to change target, preventing you from missing auto-attack. You'd better not use this on GCD healing magic, though it won't affect too much.
+
   ```
   /ac "Nature's Minne" <tt>
   ```
+
 - Cast crafting/gathering actions. You may have seen a lot of examples somewhere else.
+
   ```
   /ac Reflect <wait.3>
   /ac Innovation <wait.2>
@@ -226,6 +233,7 @@ There are some other examples of single /ac:
   /ac Groundwork <wait.3>
   /echo Craft finished <se.2>
   ```
+
 - `[Advanced]`Prevent actions from being queued in. Most used in Mudra. There's no appropriate example that can be shown.
 
 ## /wait and <wait.X>
@@ -248,6 +256,7 @@ Due to one lane, `/wait` without a macro lock is easy to be interrupted. Macro l
 There are some other examples of `/wait`:
 
 - Cast repeated actions when you are extremely boring and no more DPS required.
+
   ```
   /ac Holy <wait.3>
   /ac Holy <wait.3>
@@ -265,20 +274,26 @@ There are some other examples of `/wait`:
   /ac Holy <wait.3>
   /e One more Holy macro <se.1>
   ```
+
 - Send messages after actions.
+
   ```
   /ac "Hallowed Ground"
   /p I AM IMMORTAL!!! <se.1>
   /wait 10
   /p Man is mortal...<se.2>
   ```
+
 - Prevent your messages filling the scene when pressing key repeatedly.
+
   ```
   /ac Shirk <2>
   /wait 1
   /p Shirk => <2> <se.3>
   ```
+
 - `[Advanced]`Realize condition branch by different animation lock. The following macro can cast 4 `Hasty` and 1 `Basic Touch`, while at most one of them can be replaced by `Precise Touch`.
+
   ```
   /ac "Precise Touch" <wait.1>
   /ac Hasty <wait.2>
@@ -430,6 +445,7 @@ Set the specified hotkey to specified location.
 Example:
 
 - Quickly set a bunch of hotkeys that are only used in a few occasions to the designated position.
+
   ```
   /hotbar set "Egi Assault" 7 1
   /hotbar set Tri-disaster 7 2
@@ -445,7 +461,9 @@ Example:
   /hotbar set "Ruin III" 7 12
   /e SMN TEA Beginner ready!
   ```
+
 - `[Advanced]`Overwrite an executed action macro with action hotkey, allowing it to be queued in. For more details, please read part 2.
+
   ```
   /micon "Midare Setsugekka"
   /ac "Iaijutsu"
@@ -465,6 +483,7 @@ Example:
 
 - Delete used macros which shouldn't be run twice. There is no appropriate example here.
 - Delete everything displayable (`rm -rf ./*`).
+
   ```
   /hotbar remove 1 all
   /hotbar remove 2 all
@@ -509,19 +528,21 @@ Copy the former specified hotbar to the latter one.
 Examples:
 
 - Backup current hotbars.
+
   ```
   /hotbar copy BRD 1 BRD 4
   /hotbar copy BRD 2 BRD 5
   /hotbar copy BRD 3 BRD 6
   /e Backup complete.
   ```
+
 - `[Advanced]`Set a macro hotkey to designed position.
 - `[Advanced]`Use for Menu Macro System. For more details, please read part 2.
 - `[Advanced]`Using in Advanced hotbar-change Macro Systems to achieve more function.
 
 ## Chatting Command
 
-Most basic combat macros are aimed at sending massage to communicate. You can find all chatting command at https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/?category2=1. Here are only some notes.
+Most basic combat macros are aimed at sending massage to communicate. You can find all chatting command at <https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/?category2=1>. Here are only some notes.
 
 Some public channels(say, yell, shout, emote) have `continuous messages restriction`. If you send more than 1 message in 1 second, the rest will not be seen by others. But they can still complete quests that need you say something. If you are too shy to made your message seen or tired of inputting same words in beast tribe daily quests, you can do like this:
 
@@ -650,13 +671,16 @@ Here are some other useful text commands:
 Here are some other useful macros:
 
 - This macro can be a better "`Tab`", for it can help you retarget your enemy after healing party members or attacking adds, regardless the field of vision.
+
   ```
   /merror off
   /nt
   /ta <le>
   /micon "Target Forward"
   ```
+
 - This macro can let all your pet, minion and chocobo away, and also turn off all battle effects. Use this when too many players in battle like hunting.
+
   ```
   /micon Succor
   /merror
@@ -666,7 +690,9 @@ Here are some other useful macros:
   /battleeffect party
   /battleeffect other
   ```
+
 - This macro let you summon your mount. If unable to summon, it will automatically change to "`sprint`". If you want to sprint at mountable area, just pressing with a jump.
+
   ```
   /micon Sprint
   /mount Snowman (change this to anything you like)
@@ -907,6 +933,7 @@ The advantages of "`change`" are direct modification and intuitively visible, wh
 Here is a special situation: in different action states, the same action has different functions. For example, `Transpose` swaps `Astral Fire` with a single `Umbral Ice`, or `Umbral Ice` with a single `Astral Fire`. We need two macros, but we don't want an action to occupy 2 hotbar slots. So we need a little trick. To ensure the cast of `Transpose`, we need it be normal hotkey, but macro later. We can backup the target hotbar, and "`set`" after "`change`" (note that hotbar number may change). Wait a little, and reset it. If you use "`copy`", backup is not needed for it has been preinstall.
 
 - "`change`" type:
+
   ```
   /micon Transpose
   /mlock
@@ -917,7 +944,9 @@ Here is a special situation: in different action states, the same action has dif
   /wait 1
   /hotbar copy BLM 10 BLM 6
   ```
+
 - "`copy`" type:
+
   ```
   /micon Transpose
   /mlock
@@ -1065,16 +1094,21 @@ You need `backup` your operation hotbar first, and `preinstall` your rotation, t
 ![](img/e2.png)
 
 - The macro on hotbar 6 is used to start rotation and begin to cast Ruin III before pull.
+
   ```
   /micon "Ruin III"
   /ac "Ruin III"
   /hotbar copy SMN 7 SMN 1
   ```
+
 - The one on hotbar 7 is used to change to next state (because 1 hotbar is not enough for this rotation)
+
   ```
   /hotbar copy SMN 8 SMN 1
   ```
+
 - The one on hotbar 8 is used to finish rotation and go back to normal hotbar.
+
   ```
   /hotbar copy SMN 6 SMN 1
   ```
