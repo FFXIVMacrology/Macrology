@@ -12,7 +12,8 @@
   "license": "CC-BY-SA-4.0",
   "private": true,
   "scripts": {
-    "lint": "markdownlint -f *.md",
+    "lint": "markdownlint '*.md'",
+    "lint:fix": "markdownlint --fix '*.md'",
     "toc": "md-magic -p '*.md'"
   },
   "devDependencies": {
