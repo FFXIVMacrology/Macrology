@@ -37,62 +37,47 @@ This article is translated from Chinese. Examples are changed to better fit Engl
 
 TL; DR: If you already know basic macros well, read "Hotbar" in Part 1 than start from "Message Macro Type ASWC" in Part 2.
 
-## Index
+## Table of Contents
 
-### [Part 1 Basic Macro](#part-1-basic-macro-1)
+<!-- AUTO-GENERATED-CONTENT:START (TOC:maxDepth=3) -->
+- [Preface](#preface)
+- [Explanation](#explanation)
+- [Part 1 Basic Macro](#part-1-basic-macro)
+  - [Introduction](#introduction)
+  - [Macro Panel](#macro-panel)
+  - [Text Command and Macro](#text-command-and-macro)
+  - [Characteristics of Macro](#characteristics-of-macro)
+  - [Placeholder](#placeholder)
+  - [Local Processing](#local-processing)
+  - [Action Queue](#action-queue)
+  - [/ac](#ac)
+  - [/wait and `<wait.X>`](#wait-and-waitx)
+  - [Hotbar](#hotbar)
+  - [/hotbar](#hotbar-1)
+  - [Chatting Command](#chatting-command)
+  - [Macro-controlling Text Command](#macro-controlling-text-command)
+  - [Examples](#examples)
+  - [Debug](#debug)
+  - [Conclusion](#conclusion)
+- [Part 2 Advanced Macro](#part-2-advanced-macro)
+  - [Introduction](#introduction-1)
+  - [FAQ](#faq)
+  - [Abbreviation](#abbreviation)
+  - [Message Macro Type ASWC](#message-macro-type-aswc)
+  - [Action State-system](#action-state-system)
+  - [hotbar-change Macro System](#hotbar-change-macro-system)
+  - [hotbar-change Macro System Logic Guide Diagram](#hotbar-change-macro-system-logic-guide-diagram)
+  - [Combo Macro System Type ASWC](#combo-macro-system-type-aswc)
+  - [Exhibition Macro](#exhibition-macro)
+  - [Menu Macro System](#menu-macro-system)
+  - [Conclusion](#conclusion-1)
+- [Part 3 Uncommon Macro](#part-3-uncommon-macro)
+  - [Introduction](#introduction-2)
+<!-- AUTO-GENERATED-CONTENT:END -->
 
-- [Introduction](#introduction)
-- [Macro Panel](#macro-panel)
-- [Text Command and Macro](#text-command-and-macro)
-- [Characteristics of Macro](#characteristics-of-macro)
-- [Placeholder](#placeholder)
-- [Local Processing](#local-processing)
-- [Action Queue](#action-queue)
-- [/ac](#/ac)
-- [/wait and <wait.X>](#/wait-and-<wait.X>)
-- [Hotbar](#hotbar)
-- [/hotbar](#hotbar-1)
-- [Chatting Command](#chatting-command)
-- [Macro-controlling Text Command](#macro-controlling-text-command)
-- [Examples](#examples)
-- [Debug](#debug)
-- [Conclusion](#conclusion)
+## Part 1 Basic Macro
 
-### [Part 2 Advanced Macro](#part-2-advanced-macro-1)
-
-- [Introduction](#introduction-1)
-- [FAQ](#faq)
-- [Abbreviation](#abbreviation)
-- [Message Macro Type ASWC](#message-macro-type-aswc)
-- [Action State-system](#action-state-system)
-- [hotbar-change Macro System](#hotbar-change-macro-system)
-- [hotbar-change Macro System Logic Guide Diagram](#hotbar-change-macro-system-logic-guide-diagram)
-- [Combo Macro System Type ASWC](#combo-macro-system-type-aswc)
-- [Exhibition Macro](#exhibition-macro)
-- [Menu Macro System](#menu-macro-system)
-- [Conclusion](#conclusion-1)
-
-### [Part 3 Uncommon Macro](#part-3-uncommon-macro-1)
-
-- [Introduction](#introduction-2)
-- [Process Guiding Macro](#Process-Guiding-Macro)
-- [Priority Macro](#Priority-Macro)
-- [Rolling Macro System](#Rolling-Macro-System)
-- [Pseudo-random Macro System](#Pseudo-random-Macro-System)
-- [Multistage Fallback Macro System](#Multistage-Fallback-Macro-System)
-- [Multi-purpose Macro and Shared Hotbar](#Multi-purpose-Macro-and-Shared-Hotbar)
-- [Macro at Low Frames](#Macro-at-Low-Frames)
-- [Core Framework of Macro](#Core-Framework-of-Macro)
-- [Tricks](#Tricks)
-- [Unsolvable Problem](#Unsolvable-Problem)
-- [Macrology Acrobatics](#Macrology-Acrobatics)
-- [Macrology Thought](#Macrology-Thought)
-- [Sharing](#Sharing)
-- [Postscript](#Postscript)
-
-# Part 1 Basic Macro
-
-## Introduction
+### Introduction
 
 This part elaborates basic knowledge of macro. Skilled in macro or not, there can be something new to you.  
 In this part, you can learn:
@@ -104,7 +89,7 @@ In this part, you can learn:
 - Important text command
 - Writing simple macro
 
-## Macro Panel
+### Macro Panel
 
 Press Esc or select system in main menu, then select User Macros to open macro panel. You can also bind a hotkey to it in `Keybind`.  
 ![](img/panel.png)  
@@ -132,20 +117,20 @@ There are several submenu options:
 - Redo: undo the undo.
 - Set to Hotbar: assign a hotkey of this macro to your cross hotbar.
 
-## Text Command and Macro
+### Text Command and Macro
 
 So, what is exactly macro? In FFXIV, macro is a program-like text command set which can instead players' operation. Question raises again that what is exactly text command? In game we can press the hotkey to cast an action, and by execute `/ac "action name"`, we can also cast this action. This text command instead the operation that pressing the hotkey. You can use placeholder in text command, like `<me>` instead of inputting your ID. FFXIV doesn't have a special text command inputting area, and all commands should be input in chat window with a `/` at the beginning to distinguish from chatting messages. **If this `/` missing or not at the beginning, your command will be sent as a chatting massage.** Most commands have abbreviated forms and localized forms, you can use anyone you like while we suggest using auto-translation so that you can use your macro on other clients. There are so many text commands that we can only show you ones of most importance. If you meet any command you don't know, give it a try!
 
 Inputting text command again and again can be tedious. We can store frequently-used commands in a program so we can run it to input and execute faster. This program is exactly macro. A macro can store up to 15 lines of commands. Running macro will input and execute stored commands line by line in a very short time (1 frame per line). **If there are any lines not start with a `/`, it will be sent as chatting massage.** Macro ends if meeting a blank line. Almost all text command can be executed in macro, and there are also some macro-controlling command.
 
-## Characteristics of Macro
+### Characteristics of Macro
 
 There are two basic characteristics of macro: one direction, one lane.
 
 - One direction means macro execute its command line by line. All lines below will wait until former line complete its execution. No condition or loop is accepted. Macro knows no result, nor executable or not. This makes macro hard to programming. **Note that "complete its execution" means command executed instead of character's action.** `/ac` cost one frame to execute. If character cannot use this action at this time, this command will also be executed, callback that "you cannot do this" and completed.
 - One lane means only one macro can be run at the same time. If you run a new macro before previous macro ends, previous one will be shut down at once. If previous one has a macro lock (`/mlock`), no macro can be run until it ends. **Note that inputting text command by yourself won't interrupt previous macro, nor prevented by macro lock.** That is because text command is different from macro, though macro is consist by text commands.
 
-## Placeholder
+### Placeholder
 
 Placeholder is an element of text. Different from others, placeholder can change itself logically to meet current state. Placeholder looks like `<...>`, present a logical object. It's the only element that can change itself. When line sent, placeholder will be replaced by its logical object. For example, "`Provoke => <t>`", if target names "Fatebreaker", it will change to "`Provoke => Fatebreaker`". Players in other languages will see the name in their own languages. If logical object does not exist, placeholder will change to `None` (not blank or space).
 
@@ -153,17 +138,17 @@ Placeholder can be used in text command. Except using in chatting commands, it c
 
 There are two placeholders not as the same as others. `<wait.X>` is a controlling command, equals to `/wait` (see below). It and anything after it will not appear in messages. `<se.X>` will ring a sound in party/alliance/echo. it won't change to other forms.
 
-## Local Processing
+### Local Processing
 
 Macro and text command instead player's operation. All these will change to a same form in system. All player's operation is local, so macro and text command are also local. They will be executed at once no matter how poor your network connection is.
 
 You may feel disagree with this, for when network connection is poor, macro works not well. This is actually because macro is running as before, but connection with server is not as before. When you use a crafting macro, some actions missing if network connection is poor, this not because macro are influenced by network connection, but macro execute its commands as usual while character cannot receive commands due to poor network connection.
 
-## Action Queue
+### Action Queue
 
 Except Draw and Mudra, all actions are handled at servers. This causes a delay, and action queue compensate it. When you press an action hotkey, if you cannot cast this action now but you can after no more than about 0.5s, this action will be queued in, and cast automatically once you can. Therefore, by pressing hotkey you can cast next action as soon as you can, increasing your uptime. Without it, only after action ready can you press it effectively, result in a little delay about 0.1s, and greatly reduction of your DPS due to less GCDs. **Note that action cast by text command cannot be queued in.**
 
-## /ac
+### /ac
 
 ```
 ALIASES:
@@ -236,7 +221,7 @@ There are some other examples of single /ac:
 
 - `[Advanced]`Prevent actions from being queued in. Most used in Mudra. There's no appropriate example that can be shown.
 
-## /wait and <wait.X>
+### /wait and `<wait.X>`
 
 ```
 USAGE:
@@ -311,7 +296,7 @@ There are some other examples of `/wait`:
   /ac "Basic Touch"
   ```
 
-## Hotbar
+### Hotbar
 
 Hotbar is short for hotkey bar, also called as action bar. There are many kinds of hotkey that can be placed on hotbar. Each class or job has 10 special hotbars. All classes and jobs share 10 shared hotbars. The number of shared hotbar is black ![](img/share5.png), while one of the job-specific hotbar is white ![](img/X5.png). Each hotbar has 12 slots.
 
@@ -327,7 +312,7 @@ But you can only display at most 10 hotbars. You can only display hotbars which 
 
 Hotbar is extremely important in advanced macro. You will use a lot of hidden hotbars to realize your goal. You'd better hold an Excel to note down each hotbar is used for what if you want to go deeper in Macrology, or you may mistakenly overwrite hotbars which have been used by other macros, result in chaos.
 
-## /hotbar
+### /hotbar
 
 ```
 USAGE:
@@ -388,7 +373,7 @@ USAGE:
 
 We will start our learning from its subcommands.
 
-### share
+#### share
 
 USAGE `/hotbar share [hotbar number] [on/off]`
 
@@ -396,7 +381,7 @@ Change displaying shared hotbar or special one of specified number. If omitting 
 
 - `[Advanced]`Toggle 2 states.
 
-### display
+#### display
 
 USAGE `/hotbar display [hotbar number] [on/off]`
 
@@ -424,7 +409,7 @@ Example of these two subcommands:
 /e Combat Mod UI changed.
 ```
 
-### set, action, general, pet, buddy, emote, item, mount, minion, marking, waymark, blueaction, etc. (We call them "sets")
+#### set, action, general, pet, buddy, emote, item, mount, minion, marking, waymark, blueaction, etc. (We call them "sets")
 
 USAGE `/hotbar [sets] [name] [hotbar number] [slot number]`
 
@@ -473,7 +458,7 @@ Example:
   /hotbar copy SAM 10 SAM 1
   ```
 
-### remove
+#### remove
 
 USAGE `/hotbar remove [hotbar number] [slot number]`
 
@@ -497,7 +482,7 @@ Example:
   /hotbar remove 10 all
   ```
 
-### change
+#### change
 
 USAGE `/hotbar change [hotbar number]`
 
@@ -513,7 +498,7 @@ Example:
 
 - `[Advanced]`hotbar-change Macro Systems. It's hard to be shown. For more details, please read part 2.
 
-### copy
+#### copy
 
 USAGE `/hotbar copy [class/job name(abbr.) 1] [hotbar number 1] [class/job name(abbr.) 2] [hotbar number 2]`
 
@@ -540,7 +525,7 @@ Examples:
 - `[Advanced]`Use for Menu Macro System. For more details, please read part 2.
 - `[Advanced]`Using in Advanced hotbar-change Macro Systems to achieve more function.
 
-## Chatting Command
+### Chatting Command
 
 Most basic combat macros are aimed at sending massage to communicate. You can find all chatting command at <https://na.finalfantasyxiv.com/lodestone/playguide/db/text_command/?category2=1>. Here are only some notes.
 
@@ -553,11 +538,11 @@ Some public channels(say, yell, shout, emote) have `continuous messages restrict
 
 There are 2 special channels: emote and echo. You can use `/em` and `/e` to use these channels. Emote channel will show your name, but have no separator between name and message. Echo channel won't show your name, for only yourself can see it.
 
-## Macro-controlling Text Command
+### Macro-controlling Text Command
 
 Macro-controlling text command includes `/wait`, `/macroicon`, `/macrolock`, `/macroerror` and `/macrocancel`. We have learned `/wait` above. The rest of them can write "`macro`" as "`m`" for short.
 
-### /micon
+#### /micon
 
 ```
 ALIASES:
@@ -606,7 +591,7 @@ This is used for decorate your macro and distinguish them. No one can find his w
 - The crafter action icon will automatically change. If you are not a crafter, icon will be shown as carpenter's.
 - To distinguish macro from real hotkey, there will be a gear on the top right corner. ![](img/difference.png)
 
-### /mlock
+#### /mlock
 
 ```
 ALIASES:
@@ -618,7 +603,7 @@ USAGE:
 
 This command prevents interruption of important macros, but it also reduces its flexibility. It only protects the commands after it. If you want to interrupt a macro with macro lock, you can use `/mcancel` or "`Cancel Macro`" (This function doesn't have a default keybind).
 
-### /merror
+#### /merror
 
 ```
 ALIASES:
@@ -634,7 +619,7 @@ Toggle between on and off when no subcommand is specified.
 
 Almost never use "`on`". This can prevent some error log when using complex target macro. Only macro error can be prevented, including logical target do not exist, cannot use at this time, command not exist and macrolocked. Cannot prevent action error like not ready yet, MP insufficient, target out of range and target not in sight.
 
-### /mcancel
+#### /mcancel
 
 ```
 ALIASES:
@@ -646,7 +631,7 @@ USAGE:
 
 It can only be executed from chat window. If you put it in a macro, it has no effect while it can also interrupt macro without macro lock for execution of a blank macro.
 
-## Examples
+### Examples
 
 Here are some other useful text commands:
 
@@ -699,7 +684,7 @@ Here are some other useful macros:
   /ac Sprint
   ```
 
-## Debug
+### Debug
 
 It would make everyone upset when your new macro doesn't work without reason. Actually, there are so many reasons can be. A text command has a main command started with a "`/`". It may have many sub commands, numbered by spaces.
 
@@ -716,7 +701,7 @@ If still no error log but macro actually doesn't work, things can be complex. Ch
 - action after "`/wait`" do not execute: check interruption or longer the wait time.
 - "`/micon`" doesn't work: check category and name. For item, check HQ icon and possession.
 
-## Conclusion
+### Conclusion
 
 After reading this part, you should have learned:
 
@@ -729,9 +714,9 @@ After reading this part, you should have learned:
 
 This is the ending of Part 1. If you read carefully, you will no longer need to ask for macros. You should be able to write any macros you can copy and paste. The more advanced macros cannot be simply copied and pasted. If you are longing for advanced macros, go on reading Part 2. If you meet something unknown, you can go back to Part 1 to find the answers, or just give it a try!
 
-# Part 2 Advanced Macro
+## Part 2 Advanced Macro
 
-## Introduction
+### Introduction
 
 From here you will go into advanced macros. For reducing pages, there will be some abbreviations. If you meet something unknown, go back to find the explanations.
 
@@ -739,7 +724,7 @@ Advance macro is based on keybind. You may press so many keys to cast a lot of a
 
 Instead of focusing on how to do, I'll put more words on why. **You can hardly learn something by copying and pasting.** Only your creativity grants you the best macro. Advanced macros also have their disadvantages. We will also talk about chooses between disadvantages. Nowadays we prefer using more hotbars instead of macros, for macro panel slots are extremely limited. There is no absolutely perfect macro, but you can find your own perfect.
 
-## FAQ
+### FAQ
 
 > - Q: Is there any macros I can copy and paste?
 > - A: Hardly any. Macros serve issues. If you want to ask for macros, you must clarify what issues you want to solve first. Here will be some examples, but you cannot copy and paste directly. You must customize them before using. You can also develop your own macro based on these imperfect examples.
@@ -789,7 +774,7 @@ Instead of focusing on how to do, I'll put more words on why. **You can hardly l
 > - Q: Why you love macro so much?
 > - A: Macro is one of the most interesting ways to play the game. Macrology is an exploration of possibility and a challenge to the game system, which makes me happy. The producer add a lot of limits on macro, which makes it hard to use, so there are also some players think that macro is useless. But there's nothing useless. Macro is actually useful, just a little complex. It's too useful so that the producer has to limit it.
 
-## Abbreviation
+### Abbreviation
 
 For reducing the pages, we define some abbreviation here:
 
@@ -807,7 +792,7 @@ For reducing the pages, we define some abbreviation here:
 - `Reset`: copy the original hotbars to operation hotbars.
 - `Backup`: copy hotbars to a base hotbar when using.
 
-## Message Macro Type ASWC
+### Message Macro Type ASWC
 
 We once talked about how to prevent an action macro with message filling the scene: `/ac`, `/wait 1`, message. This made action cannot be queued in, and message will be late. We have to repeatedly press this macro to ensure the casting of action, due to `/ac`.
 
@@ -863,11 +848,11 @@ There are two more conditions to discuss:
 - If you need to run other macro in the time of `/wait 1`, this macro will be interrupted and hotbar cannot be reset. You can add this reset command to all macros which can be used here, or add to another macro which is frequently used in combat. You can also replace the `/wait` with some nonsense command, lower your FPS, and use your fastest speed to press twice in command delay.
 - This macro cannot cast action on logical target. If you need to, you can add `/ta <logical target>` at the head, and `/tlt` at the tail. You may lose some auto-attack due to this target change.
 
-## Action State-system
+### Action State-system
 
 Character has many "`action states`". Some are defined by game system, and others are artificially defined. In an action state, there should be actions you should cast, and actions you should not cast. For example, you cannot cast `Fire IV` in `Umbral Ice`, and shouldn't cast `Fire`. You shouldn't cast `Yukikaze` or `Gekko` after `Shifu`. To prevent casting the wrong actions, and making it easier to cast the right actions, we can temporarily remove these wrong actions and move the right actions to a better position. This calls an action state-system. The following macros are made by this system.
 
-## hotbar-change Macro System
+### hotbar-change Macro System
 
 hotbar-change macro system is a well-known macro system (maybe). Each action state is stored in a base hotbar. By "`/hotbar change`" command, they can take turns using the keybind of the first hotbar. We need to solve just one issue: how to detect action state change.
 
@@ -959,7 +944,7 @@ Here is a special situation: in different action states, the same action has dif
 
 Don't you think it looks like `ASWC`? In fact, this is a compound of `ASWC` and `hotbar-change` macro. You will see this trick in more advanced macros. There are also issues about interruption and reset we once talked. You can also use "`share`" or "`rolling macro`" to solve this situation, which is more advanced. I'll talk about them in `Part 3`. If you want to challenge yourself, think about how to exchange different drinks in two bottles.
 
-## hotbar-change Macro System Logic Guide Diagram
+### hotbar-change Macro System Logic Guide Diagram
 
 It's proved so hard for beginners to develop a reasonable logic of `hotbar-change` macro system. Here are a guide diagram:
 
@@ -1011,7 +996,7 @@ It's proved so hard for beginners to develop a reasonable logic of `hotbar-chang
 
    ![](img/hcg3.png)
 
-## Combo Macro System Type ASWC
+### Combo Macro System Type ASWC
 
 Before `Stormbloods`, PVP shares almost the same actions with PVE, including combos. But when `Stormbloods` refactors PVP actions, it makes a combo hotkey. By one key you can access to the whole combo, never mistake. Can it be done in PVE by our own hands? Of course, but also complex.
 
@@ -1083,7 +1068,7 @@ For these reasons, if you like pressing keyboard again and again, I advise you n
 
 As for combo time out, you may want to add `/wait 15` then "`return to first state`", but you have to remove your macro lock for this, this is what I suggest not.
 
-## Exhibition Macro
+### Exhibition Macro
 
 There are some jobs holding a complex but fixed rotation. When it come across with complex gimmick, it's easy to make mistakes. You may have seen some players put a rotation like this:  
 ![](img/e1.png)(from patch 5.1)
@@ -1120,9 +1105,9 @@ Seems easy but bear in mind that **every sword of macro has two edges**. Your ro
 
 Tips: Use secondary keybind and you can still rolling `1234567890-=` instead of `12345qergv~f`.
 
-## Menu Macro System
+### Menu Macro System
 
-### Jumping Menu Macro System
+#### Jumping Menu Macro System
 
 Jumping menu is a good way to sort a lot of function and also save your keybind.
 
@@ -1174,7 +1159,7 @@ This is a final scene:
 
 If you get a new minion, no more searching in minion panel is needed, just replace the name in macro panel and you can find it at once.
 
-### Folding Menu Macro System
+#### Folding Menu Macro System
 
 Folding menu is a good way to reduce interface space cost. When you do not need a submanu, you can hide it.
 
@@ -1240,7 +1225,7 @@ Here is a example to use macro in folding menu and dealing with interruption:
 
 Too much usages. Here are only usages out of combat, but you can use it in combat as well. Jumping menu for opener, folding menu for CD tracing, or any thing you want!
 
-## Conclusion
+### Conclusion
 
 If you have read carefully and done some practice, I believe you have mastered most generally useful macro system including:
 
@@ -1252,6 +1237,6 @@ If you have read carefully and done some practice, I believe you have mastered m
 
 `/hotbar set` and `/hotbar copy` are the most important commands. If you learn them well, a macro system will cost you no more than 10 minutes.
 
-# Part 3 Uncommon Macro
+## Part 3 Uncommon Macro
 
-## Introduction
+### Introduction
