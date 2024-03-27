@@ -1,0 +1,23 @@
+{
+  "name": "macrology",
+  "version": "0.0.0-dev",
+  "description": "Workspace for writing macrology",
+  "main": "index.js",
+  "repository": "git@github.com:FFXIVMacrology/Macrology.git",
+  "author": {
+    "name": "Maiko Tan",
+    "email": "maiko.tan.coding@gmail.com",
+    "url": "https://github.com/MaikoTan"
+  },
+  "license": "CC-BY-SA-4.0",
+  "private": true,
+  "scripts": {
+    "lint": "markdownlint -f *.md",
+    "toc": "md-magic -p '*.md'"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "markdown-magic": "^2.6.1",
+    "markdownlint-cli": "^0.39.0"
+  }
+}
